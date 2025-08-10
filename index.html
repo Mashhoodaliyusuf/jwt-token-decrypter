@@ -1,0 +1,647 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JWT Token Decrypt | Online JSON Web Token Decoder</title>
+  <meta name="description" content="Decode & inspect JWT tokens instantly with our free online tool. View token headers, payload data (claims), and signature verification. Supports HS256, RS256 algorithms. Essential for API developers debugging authentication tokens." />
+  <meta name="keywords" content="jwt decoder, jwt token, json web token, decode jwt, jwt validator, jwt inspector, jwt debugger, authentication token">
+<meta property="og:title" content="Online JWT Token Decoder Tool">
+<meta property="og:description" content="Inspect and decode JSON Web Tokens instantly. View headers, payloads and verify signatures for debugging authentication flows.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@400;700&amp;display=swap" rel="stylesheet" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Reset */
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center, dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+      font-family: Arial, sans-serif;
+      background-color: #dae1f1;
+      color: #333;
+    }
+    ol, ul { list-style: none; }
+
+    /* Layout */
+    #head { width:100%; height:55px; background-color: #5b7ab1; position: relative; }
+    #header { width:900px; height:55px; margin:0 auto; display:flex; align-items:center; }
+    #header a{line-height:100%;}
+    #header img{width:203px}
+    #main { width:900px; margin:20px auto; display:table }
+    #leftbar { width:650px; background:white; float:left; height:auto; border:1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    #rightbar { width:290px; background:white; float:right; height:auto; border:1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { font-size:24px; margin:20px; font-family: 'Encode Sans Condensed', sans-serif; font-weight:900; color:#4d4d4d }
+    #leftbar h2 { font-size:22px; margin:20px; font-family: 'Encode Sans Condensed', sans-serif; font-weight:900; color:#4d4d4d }
+    #leftbar h3 { font-size:19px; margin:20px; font-weight:bold; }
+    #leftbar li { font-size:18px; line-height: 27px; margin:10px 20px; font-family:Georgia; }
+    #leftbar p { font-size:18px; line-height: 27px; margin:10px 20px; font-family:Georgia; }
+    #leftbar img { width:100%; margin:10px 0; }
+    #leftbar strong{font-size:18px; line-height: 27px; margin:10px 20px; font-family:Georgia; font-weight: bolder;}
+
+    #rightbar strong { color:#5b7ab1; font-size:16px; font-style:italic; margin:10px; }
+    #rightbar p { margin:10px; font-family:Roboto, sans-serif; }
+    #rightbar a { font-size:17px; color:#404040; text-decoration:none; font-family:Georgia; }
+    #rightbar a:hover { color:#5b7ab1; }
+    
+    #foot { width:100%; display:table; margin-top:20px; padding:30px 0; background-color:#5b7ab1; }
+    #footer { width:900px; margin:auto; height:auto; padding-bottom:30px}
+    #footer-left, #footer-mid, #footer-right { float:left; height:auto; }
+    #footer-left { width:160px; }
+    #footer-mid { width:300px; }
+    #footer-right { width:400px; float:right; }
+
+
+
+    #infocon{float:left;width:600px;height:auto;padding:10px 0;margin:20px 0 30px 0; background-color: white;border:1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }  
+    #infocon h2 { font-size:22px; margin:20px; font-family: 'Encode Sans Condensed', sans-serif; font-weight:900; color:#4d4d4d }
+    #infocon h3 { font-size:19px; margin:20px; font-weight:bold; }
+    #infocon li { font-size:18px; line-height: 27px; margin:10px 20px; font-family:Georgia; }
+    #infocon p { font-size:18px; line-height: 27px; margin:10px 20px; font-family:Georgia; }      
+    #bottomads{float:left;width:600px;height:100px;background-color: lightgreen;margin-top:70px}    
+
+    .menu > li { position: relative; }
+    .menu > li > a {
+      display: block; padding: 10px 15px;
+      text-decoration: none; color: white;
+      font-size: 15px;
+    }
+    .menu > li > a:hover { text-decoration: underline; }
+
+    .copyright {
+      width:100%; height:25px; background-color:#e6e6e6;
+      color:#434343; font-size:14px; text-align:center; line-height:25px;
+    }
+
+    #toggle-theme {
+      position: absolute; right: 10px; top: 10px;
+      border: none;
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      background-color: #fff;
+      color: #333;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Voice stats container */
+    .voice-stats {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 20px 20px 20px;
+    }
+    .voice-stat {
+      width: 48%;
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-left: 4px solid;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .voice-stat.active {
+      border-left-color: #5b7ab1;
+    }
+    .voice-stat.passive {
+      border-left-color: #e74c3c;
+    }
+    .voice-stat-title {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 5px;
+      font-family: 'Encode Sans Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .voice-stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c3e50;
+      font-family: 'Encode Sans Condensed', sans-serif;
+    }
+
+    /* Night Mode */
+    body.night-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body.night-mode #head,
+    body.night-mode #foot {
+      background-color: #1f2b45;
+    }
+    body.night-mode #leftbar,
+    body.night-mode #rightbar,
+    body.night-mode #infocon
+    {
+      background-color: #1c1c1c;
+      border-color: #333;
+    }
+    body.night-mode #leftbar h2,
+    body.night-mode #leftbar h3,
+    body.night-mode #leftbar p,
+    body.night-mode #rightbar p,
+    body.night-mode #rightbar a,
+    body.night-mode #infocon h2,
+    body.night-mode #infocon h3,
+    body.night-mode #infocon p,
+    body.night-mode #infocon a,
+    body.night-mode .menu > li > a {
+      color: #e0e0e0 !important;
+    }
+    body.night-mode #rightbar a:hover,
+    body.night-mode .menu > li > a:hover {
+      color: #9ec3ff !important;
+    }
+    body.night-mode table thead {
+      background-color: #394867;
+    }
+    body.night-mode tbody tr:nth-child(even) {
+      background-color: #2b2b2b;
+    }
+    body.night-mode tbody tr:hover {
+      background-color: #3a3a3a;
+    }
+    body.night-mode textarea {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      outline: 1px solid #66bb6a;
+    }
+    body.night-mode .copyright {
+      background-color: #1a1a1a;
+      color: #bbbbbb;
+    }
+    body.night-mode #toggle-theme {
+      background-color: #333;
+      color: #fff;
+    }
+    body.night-mode .voice-stat {
+      background-color: #2b2b2b;
+    }
+    body.night-mode .voice-stat-value {
+      color: #e0e0e0;
+    }
+
+    table { border-collapse: collapse; width: 100%; border-radius: 10px; overflow: hidden; }
+    thead { background-color: #2c3e50; color: white; }
+    th, td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #ddd; }
+    tbody tr:nth-child(even) { background-color: #f2f2f2; }
+    tbody tr:hover { background-color: #e6f7ff; }
+
+    textarea {
+      min-width: calc(100% - 70px);
+      max-width: calc(100% - 70px);
+      min-height: 300px;
+      max-height: 300px;
+      padding: 15px;
+      margin: 15px 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      font-size: 16px;
+      line-height: 1.6;
+      resize: vertical;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    textarea:focus {
+      border-color: #5b7ab1;
+      box-shadow: 0 0 0 2px rgba(91, 122, 177, 0.2);
+      outline: none;
+    }
+
+    /* File upload styling */
+    .file-upload-container {
+      margin: 0 20px 20px 20px;
+      position: relative;
+    }
+
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      background-color: #5b7ab1;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-family: 'Encode Sans Condensed', sans-serif;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .file-upload-label:hover {
+      background-color: #4a6898;
+    }
+
+    .file-upload-label i {
+      margin-right: 8px;
+    }
+
+    .file-upload-input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    .file-name {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+    }
+
+    .error-message {
+      color: #e74c3c;
+      margin: 10px 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* Stats container */
+    .stats-container {
+      margin: 20px;
+    }
+
+    .stat-card {
+      background-color: #f8f9fa;
+      border-left: 4px solid #5b7ab1;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .stat-title {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 5px;
+      font-family: 'Encode Sans Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c3e50;
+      font-family: 'Encode Sans Condensed', sans-serif;
+    }
+
+    .word-frequency {
+      margin-top: 20px;
+    }
+
+    .word-frequency-title {
+      font-size: 18px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-family: 'Encode Sans Condensed', sans-serif;
+      font-weight: bold;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+
+    .word-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #eee;
+    }
+
+    .word-text {
+      font-weight: 500;
+    }
+
+    .word-count {
+      color: #5b7ab1;
+      font-weight: bold;
+    }
+
+    /* Clear button */
+    .clear-btn-container {
+      margin: 0 20px 20px 20px;
+      text-align: right;
+    }
+    
+    .clear-btn {
+      padding: 8px 16px;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Encode Sans Condensed', sans-serif;
+      transition: background-color 0.3s;
+    }
+    
+    .clear-btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    /* Responsive */
+    @media (max-width: 850px) and (min-width: 200px){
+      #head{width:100%;height:55px;}
+      #header{width:98%;height:55px;margin:0 auto;display:flex;align-items:center;}
+        #header img{height:90%}
+      #main{width:96%;margin:0px auto;display:table;margin-top:20px;display:table}
+      #leftbar{width:100%;float:none;padding-top:10px;height:auto;padding-bottom:20px;}
+      #rightbar{width:100%;float:none;height:auto;padding-bottom:20px;}
+      h1 { font-size:22px; margin:20px; font-family: 'Encode Sans Condensed', sans-serif; font-weight:900; color:#4d4d4d }
+      #leftbar h2{font-size:20px;margin:20px 10px;}
+      #leftbar h3{font-size:18px;margin:20px 10px;}
+      #leftbar p{font-size:15px;line-height: 22px;margin:10px 10px}
+      #leftbar img{width:100%;margin:10px 0;} 
+
+      #head img{margin-left:15px}
+      #head button{right:7px;top:14px}
+
+      table {border-collapse: collapse; width: 100%; border-radius: 10px; overflow:scroll; }
+      thead { background-color: #2c3e50; color: white; }
+      th, td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #ddd; }
+      tbody tr:nth-child(even) { background-color: #f2f2f2; }
+      tbody tr:hover { background-color: #e6f7ff; }
+
+      textarea {
+        min-width:calc(100% - 22px); max-width:calc(100% - 22px);
+        min-height:100px; max-height:100px;
+        padding:10px; margin:15px auto;
+        outline:1px solid rgb(103, 221, 118);
+        font-family:tahoma;
+        background-color: #f2f2f2;
+        color: #333;
+      }
+
+      #foot{width:100%;display:table;background-color: #5b7ab1;margin-top:20px;padding:20px 0;background-color: #748fbe;background-color:#5b7ab1;}
+      #footer{width:100%;margin: auto;display:table;}
+      #footer-left, #footer-mid, #footer-right { float:left; height:auto; }
+      #footer-left { width:100%; float:none;margin-top:20px;}
+      #footer-mid { width:100%;float:none;margin-top:20px;}
+      #footer-right { width:100%;float:none;margin-top:20px;}
+
+      #infocon{width:97%;height:auto;padding:10px 0;margin: 20px auto;float:none;}    
+      #bottomads{width:97%;height:150px;margin:20px auto;float:none;} 
+
+      .voice-stats {
+        flex-direction: column;
+      }
+      .voice-stat {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="head">
+    <div id="header">
+     <a href="/">
+      <img src="pythonware.png"/>
+      </a>
+    </div>
+    <button style="position:fixed" id="toggle-theme">🌙 Dark</button>
+  </div>  
+
+  <!--main starts-->
+  <div id="main">
+
+
+<div id="leftbar">
+    
+ <h2>JWT Token Decoder</h2>
+      <div class="file-upload-container">
+
+<i class="fas fa-key"></i> Paste JWT Token Below
+
+        <textarea id="jwt-input" placeholder="Paste your JWT token here (e.g., eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)"></textarea>
+      </div>
+      
+      <div class="clear-btn-container">
+        <button class="clear-btn" id="decode-btn">
+          <i class="fas fa-unlock"></i> Decode Token
+        </button>
+        <button class="clear-btn" id="clear-btn">
+          <i class="fas fa-trash"></i> Clear
+        </button>
+      </div>
+      
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-title">Header</div>
+          <pre id="header-output" class="stat-value" style="font-size: 14px; white-space: pre-wrap; word-wrap: break-word; font-family: monospace;">{}</pre>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-title">Payload</div>
+          <pre id="payload-output" class="stat-value" style="font-size: 14px; white-space: pre-wrap; word-wrap: break-word; font-family: monospace;">{}</pre>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-title">Signature Verification</div>
+          <div id="signature-output" class="stat-value" style="font-size: 16px; color: #e74c3c;">Not verified</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+
+<div id="rightbar"></div>
+
+
+    <!--infocon starts-->  
+    <div id="infocon">
+   
+<h1>JWT Token Decrypt Tool</h1>
+      
+      <p>Our JWT Token Decrypter provides a comprehensive solution for working with JSON Web Tokens:</p>
+      
+      <h2>Decoding vs. Decryption</h2>
+      <p><strong>Decoding</strong> extracts the information from a JWT token by base64 decoding the header and payload sections. This is possible because most JWTs are signed (JWS) rather than encrypted (JWE).</p>
+      
+      <p><strong>Decryption</strong> is only needed for encrypted JWTs (JWE) which use cryptographic algorithms to protect the contents. Our tool currently focuses on decoding signed tokens.</p>
+      
+      <h3>Key Features</h3>
+      <ul>
+        <li><strong>Header Analysis:</strong> Displays the algorithm (alg) and token type (typ)</li>
+        <li><strong>Payload Inspection:</strong> Shows all claims including standard (iss, exp, sub) and custom data</li>
+        <li><strong>Signature Status:</strong> Indicates whether verification is possible (requires secret/key)</li>
+        <li><strong>Format Validation:</strong> Checks if the token follows the correct JWT structure</li>
+      </ul>
+      
+      <h3>Security Considerations</h3>
+      <p>While this tool helps examine JWT contents, remember:</p>
+      <ul>
+        <li>Never share sensitive production tokens</li>
+        <li>JWTs in URLs may be logged in browser history</li>
+        <li>Decoding doesn't verify token authenticity</li>
+        <li>Always validate tokens in your production environment</li>
+      </ul>
+
+    </div>
+    <!--infocon ends-->
+
+  <!-- main ends -->  
+  </div>
+
+  <br><br><br>
+  <div id="foot">
+    <div id="footer">
+      <div id="footer-left">
+        <div class="menu-container">
+          <ul class="menu">
+            <li><a href="python-basics">Blogs</a></li>
+            <li><a href="privacy-policy">Privacy Policy</a></li>
+            <li><a href="about-us">About us</a></li>
+            <li><a href="contact-us">Contact us</a></li>
+          </ul>
+        </div>
+      </div>
+     
+      <div id="footer-mid">
+        <div class="menu-container">
+          <ul class="menu">
+            <li><a href="python-basics">Python Basics</a></li>
+            <li><a href="python-flask-tutorial">Python Flask</a></li>
+            <li><a href="tkinter-python">Python Tkinter</a></li>
+            <li><a href="products/pil/">Python Pillow</a></li>
+            <li><a href="https://www.pythonware.com/library/pil/handbook/overview.htm">Python Imaging Library Overview</a></li>
+            <li><a href="https://www.pythonware.com/library/pil/handbook/introduction.htm">PIL Introduction</a></li>
+            <li><a href="https://www.pythonware.com/library/pil/handbook/image.htm">The Image Module PIL</a></li>
+            <li><a href="https://www.pythonware.com/library/pil/handbook/concepts.htm">Color Bands and Mode inside PIL</a></li> 
+            <li><a href="https://www.pythonware.com/library/pil/handbook/decoder.htm">File Decoder</a></li>   
+            <li><a href="https://www.pythonware.com/btrfs-file-system">Btrfs File System</a></li>               
+          </ul>
+        </div>
+      </div>
+      <div id="footer-right">
+          <div class="menu-container">
+          <ul class="menu">
+            <li><a href="regex-tester">Python Regex Tester</a></li>
+            <li><a href="python-code-formatter">Python Code Formatter</a></li>
+            <li><a href="box-shadow">CSS Box Shadow</a></li>
+            <li><a href="css-gradient-generator">CSS Gradient Generator</a></li>
+            <li><a href="products/xmlrpc">XML Formatter</a></li>
+            <li><a href="ASCII-Code-Generator">ASCII Code Generator</a></li>
+            <li><a href="word-counter">Word Counter</a></li>
+            <li><a href="/math-solver">Math Solver</a></li>  
+            </ul>
+        </div>
+      </div>     
+     
+     
+    </div>
+  </div>
+
+  <div class="copyright">© 2025 PythonWare. All rights reserved.</div>
+
+  <script>
+    // Theme toggle
+    const toggleBtn = document.getElementById('toggle-theme');
+    toggleBtn.addEventListener('click', function () {
+      document.body.classList.toggle('night-mode');
+      toggleBtn.textContent = document.body.classList.contains('night-mode') ? '☀️ Light' : '🌙 Dark';
+    });
+    
+    
+  // JWT Decoder functionality
+    document.getElementById('decode-btn').addEventListener('click', function() {
+      const jwtInput = document.getElementById('jwt-input').value.trim();
+      const headerOutput = document.getElementById('header-output');
+      const payloadOutput = document.getElementById('payload-output');
+      const signatureOutput = document.getElementById('signature-output');
+      
+      if (!jwtInput) {
+        alert('Please enter a JWT token');
+        return;
+      }
+      
+      try {
+        const parts = jwtInput.split('.');
+        if (parts.length !== 3) {
+          throw new Error('Invalid JWT format - must have 3 parts separated by dots');
+        }
+        
+        // Decode header
+        const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
+        headerOutput.textContent = JSON.stringify(header, null, 2);
+        
+        // Decode payload
+        const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+        payloadOutput.textContent = JSON.stringify(payload, null, 2);
+        
+        // Signature info
+        signatureOutput.textContent = 'Signature present (not verified)';
+        signatureOutput.style.color = '#5b7ab1';
+        
+        // Check expiration if present
+        if (payload.exp) {
+          const now = Math.floor(Date.now() / 1000);
+          if (payload.exp < now) {
+            payloadOutput.textContent += '\n\n⚠️ Token expired!';
+          }
+        }
+        
+      } catch (error) {
+        headerOutput.textContent = 'Error: ' + error.message;
+        payloadOutput.textContent = '';
+        signatureOutput.textContent = 'Invalid token';
+        signatureOutput.style.color = '#e74c3c';
+      }
+    });
+    
+    
+    // Clear button
+    document.getElementById('clear-btn').addEventListener('click', function() {
+      document.getElementById('jwt-input').value = '';
+      document.getElementById('header-output').textContent = '{}';
+      document.getElementById('payload-output').textContent = '{}';
+      document.getElementById('signature-output').textContent = 'Not verified';
+      document.getElementById('signature-output').style.color = '#e74c3c';
+    });    
+  
+  
+ 
+
+  </script>
+</body>
+</html>
